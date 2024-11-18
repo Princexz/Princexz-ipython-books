@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IPython Cookbook, ">
+
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+
+        <link rel="alternate"  href="https://ipython-books.github.io/feeds/all.atom.xml" type="application/atom+xml" title="IPython Cookbook Full Atom Feed"/>
+
+        <title>IPython Cookbook - 8.2. Predicting who will survive on the Titanic with logistic regression</title>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="https://ipython-books.github.io/theme/css/styles.css">
+    <link rel="stylesheet" href="https://ipython-books.github.io/theme/css/pygments.css">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,500" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+
+    <header id="header" class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-4">
+             <div id="menu">
+                 <div class="pure-menu pure-menu-open pure-menu-horizontal">
+<ul>
+        <li><a href="/">home</a></li>
+        <li><a href="https://github.com/ipython-books/cookbook-2nd-code">Jupyter notebooks</a></li>
+        <li><a href="https://github.com/ipython-books/minibook-2nd-code">minibook</a></li>
+        <li><a href="https://cyrille.rossant.net">author</a></li>
+</ul>                </div>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-4">
+            <div id="social">
+                <div class="pure-menu pure-menu-open pure-menu-horizontal">
+<ul>
+        <li><a href="https://twitter.com/cyrillerossant"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://github.com/ipython-books/cookbook-2nd"><i class="fa fa-github"></i></a></li>
+</ul>                </div>
+            </div>
+        </div>
+    </header>
+       
+
+    
+    <div id="layout" class="pure-g">
+        <section id="content" class="pure-u-1 pure-u-md-4-4">
+            <div class="l-box">
+
+    <header id="page-header">
+        <h1>8.2. Predicting who will survive on the Titanic with logistic regression</h1>
+    </header>
+
+    <section id="page">
+        <p><a href="/"><img src="https://raw.githubusercontent.com/ipython-books/cookbook-2nd/master/cover-cookbook-2nd.png" align="left" alt="IPython Cookbook, Second Edition" height="130" style="margin-right: 20px; margin-bottom: 10px;" /></a> <em>This is one of the 100+ free recipes of the <a href="/">IPython Cookbook, Second Edition</a>, by <a href="http://cyrille.rossant.net">Cyrille Rossant</a>, a guide to numerical computing and data science in the Jupyter Notebook. The ebook and printed book are available for purchase at <a href="https://www.packtpub.com/big-data-and-business-intelligence/ipython-interactive-computing-and-visualization-cookbook-second-e">Packt Publishing</a>.</em></p>
+<p>▶&nbsp;&nbsp;<em><a href="https://github.com/ipython-books/cookbook-2nd">Text on GitHub</a> with a <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode">CC-BY-NC-ND license</a></em><br />
+▶&nbsp;&nbsp;<em><a href="https://github.com/ipython-books/cookbook-2nd-code">Code on GitHub</a> with a <a href="https://opensource.org/licenses/MIT">MIT license</a></em></p>
+<p>▶&nbsp;&nbsp;<a href="https://ipython-books.github.io/chapter-8-machine-learning/"><strong><em>Go to</em></strong> <em>Chapter 8 : Machine Learning</em></a><br />
+▶&nbsp;&nbsp;<a href="https://github.com/ipython-books/cookbook-2nd-code/blob/master/chapter08_ml/02_titanic.ipynb"><em><strong>Get</strong> the Jupyter notebook</em></a>  </p>
+<p><a href="https://www.packtpub.com/big-data-and-business-intelligence/ipython-interactive-computing-and-visualization-cookbook-second-e">The recipe is available in the book, to be purchased on Packt.</a></p>
+<!-- REMOVE AS PER PACKT AGREEMENT
+
+In this recipe, we will introduce **logistic regression**, a basic classifier. We will apply these techniques on a **Kaggle** dataset where the goal is to predict survival on the Titanic based on real data (see [http://www.kaggle.com/c/titanic](http://www.kaggle.com/c/titanic)).
+
+> Kaggle (http://www.kaggle.com/competitions) hosts machine learning competitions where anyone can download a dataset, train a model, and test the predictions on the website.
+
+## How to do it...
+
+**1.&nbsp;** We import the standard packages:
+
+
+wzxhzdk:0
+
+
+**2.&nbsp;** We load the training and test datasets with pandas:
+
+
+wzxhzdk:1
+
+
+
+wzxhzdk:2
+
+
+![Output]({filename}02_titanic_files/02_titanic_8_0.png)
+
+**3.&nbsp;** Let's keep only a few fields for this example, and also convert the `sex` field to a binary variable so that it can be handled correctly by NumPy and scikit-learn. Finally, we remove the rows that contain `NaN` values:
+
+
+wzxhzdk:3
+
+
+![Output]({filename}02_titanic_files/02_titanic_10_0.png)
+
+**4.&nbsp;** Now, we convert this `DataFrame` object to a NumPy array so that we can pass it to scikit-learn:
+
+
+wzxhzdk:4
+
+
+**5.&nbsp;** Let's have a look at the survival of male and female passengers as a function of their age:
+
+
+wzxhzdk:5
+
+
+
+wzxhzdk:6
+
+
+![<matplotlib.figure.Figure at 0x5adbda0>]({filename}02_titanic_files/02_titanic_15_0.png)
+
+**6.&nbsp;** Let's try to train a `LogisticRegression` classifier in order to predict the survival of people based on their gender, age, and class. We first need to create a train and a test dataset:
+
+
+wzxhzdk:7
+
+
+
+wzxhzdk:8
+
+
+**7.&nbsp;** We train the model and we get the predicted values on the test set:
+
+
+wzxhzdk:9
+
+
+The following figure shows the actual and predicted results:
+
+
+wzxhzdk:10
+
+
+![<matplotlib.figure.Figure at 0x8f5d160>]({filename}02_titanic_files/02_titanic_22_0.png)
+
+**8.&nbsp;** To get an estimation of the model's performance, we compute the cross-validation score with the `cross_val_score()` function. This function uses a three-fold stratified cross-validation procedure by default, but this can be changed with the `cv` keyword argument:
+
+
+wzxhzdk:11
+
+
+
+wzxhzdk:12
+
+
+This function returns, for each pair of train and test set, a prediction score (we give more details in *How it works...*).
+
+**9.&nbsp;** The `LogisticRegression` class accepts a `C` hyperparameter as an argument. This parameter quantifies the regularization strength. To find a good value, we can perform a grid search with the generic `GridSearchCV` class. It takes an estimator as input and a dictionary of parameter values. We can also specify the number of cores to use on a multicore processor with the `n_jobs` argument. This new estimator uses cross-validation to select the best parameter:
+
+
+wzxhzdk:13
+
+
+
+wzxhzdk:14
+
+
+**10.&nbsp;** Here is the performance of the best estimator:
+
+
+wzxhzdk:15
+
+
+
+wzxhzdk:16
+
+
+## How it works...
+
+Logistic regression is *not* a regression model, it is a classification model. Yet, it is closely related to linear regression. This model predicts the probability that a binary variable is 1, by applying a **sigmoid function** (more precisely, a logistic function) to a linear combination of the variables. The equation of the sigmoid is:
+
+$$\forall i \in \{1, \ldots, N\}, \quad \mathbf{\hat{y}}_i = f(\mathbf{x}_i \mathbf{w}) \quad \textrm{where} \quad f(x) = \frac{1}{1+\exp(-x)}.$$
+
+The following figure shows a logistic function:
+
+![A logistic function]({filename}02_titanic_files/logit.png)
+
+If a binary variable has to be obtained, we can round the value to the closest integer.
+
+The parameter `w` is obtained with an optimization procedure during the learning step.
+
+## There's more...
+
+Here are a few references:
+
+* Logistic regression in scikit-learn's documentation, available at [http://scikit-learn.org/stable/modules/linear_model.html#logistic-regression](http://scikit-learn.org/stable/modules/linear_model.html#logistic-regression)
+* Logistic regression on Wikipedia, available at [https://en.wikipedia.org/wiki/Logistic_regression](https://en.wikipedia.org/wiki/Logistic_regression)
+
+## See also
+
+* Geting started with scikit-learn
+* Learning to recognize handwritten digits with a K-nearest neighbors classifier
+* Using support vector machines for classification tasks
+
+-->
+    </section>
+
+            </div>
+        </section>
+
+        <footer id="footer" class="pure-u-1 pure-u-md-4-4">
+            <div class="l-box">
+                <div>
+                    <p>&copy; <a href="https://cyrille.rossant.net">Cyrille Rossant</a> &ndash;
+                        Built with <a href="https://github.com/PurePelicanTheme/pure-single">Pure Theme</a>
+                        for <a href="https://blog.getpelican.com/">Pelican</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        
+    </div>
+    
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9752080; 
+var sc_invisible=1; 
+var sc_security="c177b501"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/9752080/0/c177b501/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+</body>
+</html>

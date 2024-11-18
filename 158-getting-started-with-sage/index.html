@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IPython Cookbook, ">
+
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+
+
+        <link rel="alternate"  href="https://ipython-books.github.io/feeds/all.atom.xml" type="application/atom+xml" title="IPython Cookbook Full Atom Feed"/>
+
+        <title>IPython Cookbook - 15.8. Getting started with Sage</title>
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.3.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="https://ipython-books.github.io/theme/css/styles.css">
+    <link rel="stylesheet" href="https://ipython-books.github.io/theme/css/pygments.css">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'> -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,500" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+
+    <header id="header" class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-4">
+             <div id="menu">
+                 <div class="pure-menu pure-menu-open pure-menu-horizontal">
+<ul>
+        <li><a href="/">home</a></li>
+        <li><a href="https://github.com/ipython-books/cookbook-2nd-code">Jupyter notebooks</a></li>
+        <li><a href="https://github.com/ipython-books/minibook-2nd-code">minibook</a></li>
+        <li><a href="https://cyrille.rossant.net">author</a></li>
+</ul>                </div>
+            </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-4">
+            <div id="social">
+                <div class="pure-menu pure-menu-open pure-menu-horizontal">
+<ul>
+        <li><a href="https://twitter.com/cyrillerossant"><i class="fa fa-twitter"></i></a></li>
+        <li><a href="https://github.com/ipython-books/cookbook-2nd"><i class="fa fa-github"></i></a></li>
+</ul>                </div>
+            </div>
+        </div>
+    </header>
+       
+
+    
+    <div id="layout" class="pure-g">
+        <section id="content" class="pure-u-1 pure-u-md-4-4">
+            <div class="l-box">
+
+    <header id="page-header">
+        <h1>15.8. Getting started with Sage</h1>
+    </header>
+
+    <section id="page">
+        <p><a href="/"><img src="https://raw.githubusercontent.com/ipython-books/cookbook-2nd/master/cover-cookbook-2nd.png" align="left" alt="IPython Cookbook, Second Edition" height="130" style="margin-right: 20px; margin-bottom: 10px;" /></a> <em>This is one of the 100+ free recipes of the <a href="/">IPython Cookbook, Second Edition</a>, by <a href="http://cyrille.rossant.net">Cyrille Rossant</a>, a guide to numerical computing and data science in the Jupyter Notebook. The ebook and printed book are available for purchase at <a href="https://www.packtpub.com/big-data-and-business-intelligence/ipython-interactive-computing-and-visualization-cookbook-second-e">Packt Publishing</a>.</em></p>
+<p>▶&nbsp;&nbsp;<em><a href="https://github.com/ipython-books/cookbook-2nd">Text on GitHub</a> with a <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/us/legalcode">CC-BY-NC-ND license</a></em><br />
+▶&nbsp;&nbsp;<em><a href="https://github.com/ipython-books/cookbook-2nd-code">Code on GitHub</a> with a <a href="https://opensource.org/licenses/MIT">MIT license</a></em></p>
+<p>▶&nbsp;&nbsp;<a href="https://ipython-books.github.io/chapter-15-symbolic-and-numerical-mathematics/"><strong><em>Go to</em></strong> <em>Chapter 15 : Symbolic and Numerical Mathematics</em></a><br />
+▶&nbsp;&nbsp;<a href="https://github.com/ipython-books/cookbook-2nd-code/blob/master/chapter15_symbolic/08_sage.ipynb"><em><strong>Get</strong> the Jupyter notebook</em></a>  </p>
+<p><a href="https://www.packtpub.com/big-data-and-business-intelligence/ipython-interactive-computing-and-visualization-cookbook-second-e">The recipe is available in the book, to be purchased on Packt.</a></p>
+<!-- REMOVE AS PER PACKT AGREEMENT
+
+Sage (http://www.sagemath.org) is a standalone mathematics software based on Python. It is an open source alternative to commercial products such as Mathematica, Maple, or MATLAB. Sage provides a unified interface to many open source mathematical libraries. These libraries include SciPy, SymPy, NetworkX, and other Python scientific packages, but also non-Python libraries such as ATLAS, BLAS, GSL, LAPACK, Singular, and many others.
+
+In this recipe, we will give a brief introduction to Sage.
+
+## Getting ready
+
+You can either:
+
+* Install Sage on your local computer (http://www.sagemath.org/doc/installation/)
+* Create Sage notebooks remotely in the cloud (https://cloud.sagemath.com/)
+
+Being based on so many libraries, Sage is heavy and hard to compile from source. On Ubuntu, you can use the system's package manager (see [http://www.sagemath.org/download-linux.html](http://www.sagemath.org/download-linux.html)). Binaries exist for most systems except Windows, where you generally have to use VirtualBox (a virtualization solution: [http://www.virtualbox.org](http://www.virtualbox.org)).
+
+Alternatively, you can use Sage in a browser with a Jupyter notebook running in the cloud.
+
+Once Sage is installed, you can use it with Jupyter by typing the following command in a terminal: `sage -n jupyter`.
+
+## How to do it...
+
+Here, we will create a new Sage notebook and introduce the most basic features:
+
+**1.&nbsp;** Sage accepts mathematical expressions as we would expect:
+
+
+wzxhzdk:0
+
+
+
+wzxhzdk:1
+
+
+**2.&nbsp;** Being based on Python, Sage's syntax is almost Python, but there are a few differences. For example, the power exponent is the more classical ^ symbol:
+
+
+wzxhzdk:2
+
+
+
+wzxhzdk:3
+
+
+**3.&nbsp;** Like in SymPy, symbolic variables need to be declared beforehand with the `var()` function. However, the `x` variable is always predefined. Here, we define a new mathematical function:
+
+
+wzxhzdk:4
+
+
+**4.&nbsp;** Let's simplify the expression of f:
+
+
+wzxhzdk:5
+
+
+
+wzxhzdk:6
+
+
+**5.&nbsp;** Let's evaluate `f` on a given point:
+
+
+wzxhzdk:7
+
+
+
+wzxhzdk:8
+
+
+**6.&nbsp;** Functions can be differentiated and integrated:
+
+
+wzxhzdk:9
+
+
+
+wzxhzdk:10
+
+
+
+wzxhzdk:11
+
+
+
+wzxhzdk:12
+
+
+**7.&nbsp;** Sage also supports numerical computations in addition to symbolic computations:
+
+
+wzxhzdk:13
+
+
+
+wzxhzdk:14
+
+
+**8.&nbsp;** Sage also comes with rich plotting capabilities (including interactive plotting widgets):
+
+
+wzxhzdk:15
+
+
+![Graphics object consisting of 1 graphics primitive]({filename}08_sage_files/08_sage_27_0.png)
+
+
+wzxhzdk:16
+
+
+![Graphics3d Object]({filename}08_sage_files/08_sage_28_0.png)
+
+## There's more...
+
+This (too) short recipe cannot do justice to the huge list of possibilities offered by Sage. Many aspects of mathematics are covered: algebra, combinatorics, numerical mathematics, number theory, calculus, geometry, graph theory, and many others. Here are a few references:
+
+* An in-depth tutorial on Sage, available at [http://doc.sagemath.org/html/en/tutorial/index.html](http://doc.sagemath.org/html/en/tutorial/index.html)
+* The Sage reference manual, available at [http://doc.sagemath.org/html/en/reference/index.html](http://doc.sagemath.org/html/en/reference/index.html)
+* Videos on Sage, available at [http://www.sagemath.org/help-video.html](http://www.sagemath.org/help-video.html)
+
+## See also
+
+* Diving into symbolic computing with SymPy
+
+-->
+    </section>
+
+            </div>
+        </section>
+
+        <footer id="footer" class="pure-u-1 pure-u-md-4-4">
+            <div class="l-box">
+                <div>
+                    <p>&copy; <a href="https://cyrille.rossant.net">Cyrille Rossant</a> &ndash;
+                        Built with <a href="https://github.com/PurePelicanTheme/pure-single">Pure Theme</a>
+                        for <a href="https://blog.getpelican.com/">Pelican</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        
+    </div>
+    
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=9752080; 
+var sc_invisible=1; 
+var sc_security="c177b501"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="https://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/9752080/0/c177b501/1/" alt="Web
+Analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+</body>
+</html>
